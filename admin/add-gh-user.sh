@@ -3,7 +3,9 @@ set -eu
 
 NAME=${1:?'user name?'}
 
-useradd -m -c "${NAME}" -d "/home/${NAME}" -s /bin/bash "${NAME}"
+if ! getent passwd "${NAME}"; then
+    useradd -m -c "${NAME}" -d "/home/${NAME}" -s /bin/bash "${NAME}"
+fi
 
 echo "${NAME} ALL=(ALL) NOPASSWD:ALL" >"/etc/sudoers.d/${NAME}"
 chmod -v 0440 "/etc/sudoers.d/${NAME}"
