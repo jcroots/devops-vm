@@ -1,10 +1,10 @@
 #!/bin/bash
 set -eu
 
-TAG=${1:?'tag name?'}
+GH_REF=${1:?'github ref name?'}
 
 REPO='jcroots/devops-vm'
-URL="https://github.com/${REPO}/archive/refs/tags/${TAG}.tar.gz"
+URL="https://github.com/${REPO}/archive/refs/${GH_REF}.tar.gz"
 
 DESTDIR=/opt/jcroots/devops-vm
 
@@ -19,6 +19,6 @@ tar -vxzf "${tmpfn}" -C "${DESTDIR}" --strip-components=1
 
 rm -f "${tmpfn}"
 
-echo "${DESTDIR} ${TAG} setup done!!"
+echo "${DESTDIR} ${GH_REF} setup done!!"
 
 exit 0
