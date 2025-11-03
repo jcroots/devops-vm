@@ -1,10 +1,12 @@
 #!/bin/bash
 set -eu
+
 TAG=${1:?'tag name?'}
+
 REPO='jcroots/devops-vm'
 URL="https://github.com/${REPO}/archive/refs/tags/${TAG}.tar.gz"
 
-DESTDIR=/opt/jcroots/devops
+DESTDIR=/opt/jcroots/devops-vm
 
 tmpfn=$(mktemp /tmp/devops-vm-setup-XXXXXXXX.tar.gz)
 
