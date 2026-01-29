@@ -4,4 +4,4 @@ docker:
 
 .PHONY: check
 check:
-	@shellcheck *.sh */*.sh
+	@find . -path ./.git -prune -o -type f -name '*.sh' -print | xargs shellcheck

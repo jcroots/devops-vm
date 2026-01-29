@@ -1,0 +1,15 @@
+[Unit]
+Description=GCP Cloud SQL Proxy
+Documentation=https://cloud.google.com/sql/docs/introduction
+Requires=networking.service
+After=networking.service
+
+[Service]
+User=nobody
+WorkingDirectory=/run/cloud-sql-proxy
+ExecStart=/etc/init.d/cloud-sql-proxy.sh
+Restart=always
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
