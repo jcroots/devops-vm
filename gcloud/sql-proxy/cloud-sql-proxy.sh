@@ -8,8 +8,9 @@ if test -s "${env_filename}"; then
 fi
 
 db_connection=${DATABASE_CONNECTION:-db_connection:not:set}
+credentials_file=${DATABASE_CREDENTIALS:-/usr/local/secrets/credentials/sql-client-sa.json}
 
 # just to check we can execute it
 /usr/local/bin/cloud_sql_proxy --version
 
-exec /usr/local/bin/cloud_sql_proxy --credentials-file /usr/local/secrets/credentials/sql-client-sa.json "${db_connection}"
+exec /usr/local/bin/cloud_sql_proxy --credentials-file "${credentials_file}" "${db_connection}"
