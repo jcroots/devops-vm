@@ -19,6 +19,7 @@ Provisioning and configuration scripts for a shared development VM. Scripts are 
 - **`docker/`** — Debian-based dev container. `build.sh` builds with the current user's UID/GID. `devel.sh` runs an interactive shell with `$PWD` mounted. The container runs as a non-root user with sudo access.
 - **`gcloud/`** — GCP service installation scripts. `sql-proxy-install.sh` downloads a pinned Cloud SQL Proxy version. `sql-proxy/` contains the systemd unit and wrapper script that reads connection config from `/usr/local/etc/deploy-vm.environment`. `ops-agent-install.sh` installs the Google Cloud Ops Agent.
 - **`admin/add-gh-user.sh`** — Provisions a Linux user and pulls their SSH public keys from GitHub.
+- **`.github/workflows/check.yml`** — GitHub Actions CI. Runs `make check` on every push to `main`.
 
 ## Conventions
 
