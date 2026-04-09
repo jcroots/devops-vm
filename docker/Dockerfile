@@ -1,7 +1,9 @@
-FROM debian:forky-20260316-slim
+FROM debian:forky-20260406-slim
 
 LABEL maintainer="Jeremías Casteglione <jeremias.rootstrap@gmail.com>"
-LABEL version="251103"
+LABEL version="260409"
+
+ENV JCROOTS_UPGRADE=260409
 
 USER root:root
 WORKDIR /root

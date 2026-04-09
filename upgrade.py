@@ -16,6 +16,7 @@ import re
 import sys
 import urllib.error
 import urllib.request
+from datetime import date
 from pathlib import Path
 
 WORKSPACE = Path(__file__).parent
@@ -144,6 +145,27 @@ def run_debian_forky(dry_run):
 
 
 # ---------------------------------------------------------------------------
+# Dockerfile timestamp stamping
+# ---------------------------------------------------------------------------
+
+def stamp_dockerfile(dry_run):
+    """Update version label and JCROOTS_UPGRADE env in Dockerfile with current YYMMDD."""
+    stamp = date.today().strftime("%y%m%d")
+    print(f"[dockerfile stamp]")
+    content = DOCKER_DOCKERFILE.read_text()
+    new_content = re.sub(r'LABEL version="[^"]*"', f'LABEL version="{stamp}"', content)
+    new_content = re.sub(r'ENV JCROOTS_UPGRADE=\S+', f'ENV JCROOTS_UPGRADE={stamp}', new_content)
+    if new_content == content:
+        print(f"  ok        {stamp}")
+        return
+    if dry_run:
+        print(f"  would stamp {DOCKER_DOCKERFILE.relative_to(WORKSPACE)} -> {stamp}")
+    else:
+        DOCKER_DOCKERFILE.write_text(new_content)
+        print(f"  stamped   {DOCKER_DOCKERFILE.relative_to(WORKSPACE)} -> {stamp}")
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -158,6 +180,8 @@ def main():
     if dry_run:
         print("=== DRY-run mode: no files will be modified ===\n")
 
+    dockerfile_before = DOCKER_DOCKERFILE.read_text()
+
     any_updated = False
     any_error   = False
 
@@ -168,6 +192,11 @@ def main():
         except Exception as e:
             print(f"  ERROR: {e}")
             any_error = True
+        print()
+
+    dockerfile_changed = DOCKER_DOCKERFILE.read_text() != dockerfile_before
+    if dockerfile_changed:
+        stamp_dockerfile(dry_run)
         print()
 
     if any_error:
