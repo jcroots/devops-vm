@@ -1,3 +1,7 @@
+.PHONY: all
+all:
+	@$(MAKE) docker
+
 .PHONY: docker
 docker:
 	docker/build.sh
