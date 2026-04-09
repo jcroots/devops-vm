@@ -8,7 +8,7 @@ Provisioning and configuration scripts for a shared development VM. Scripts are 
 
 ## Commands
 
-- **Lint shell scripts:** `make check` (runs shellcheck on all `.sh` files)
+- **Lint and check:** `make check` (runs shellcheck on all `.sh` files and py_compile on `upgrade.py`)
 - **Build Docker image:** `make docker` (calls `docker/build.sh`, tags as `jcroots/devops-vm`)
 - **Check for version updates:** `python3 upgrade.py --dry-run` (or without `--dry-run` to apply)
 
@@ -25,3 +25,4 @@ Provisioning and configuration scripts for a shared development VM. Scripts are 
 - All shell scripts use `set -eu` (strict error handling).
 - Pinned software versions are hardcoded as shell variables (e.g., `CSP_VERSION='2.21.2'`) — `upgrade.py` manages these via regex patterns.
 - Scripts are intended to run as root on the target VM (except Docker scripts which run as the local user).
+- Keep `CLAUDE.md` and `README.md` up to date when making changes that affect commands, architecture, or conventions documented in them.
